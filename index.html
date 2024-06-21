@@ -25,11 +25,7 @@
             border: 1px solid #ddd;
             margin-bottom: 20px;
             position: relative;
-            cursor: pointer;
-        }
-        .ad-placeholder {
-            color: #aaa;
-            font-size: 1.5em;
+            overflow: hidden; /* Ensure ads are contained within the frame */
         }
         .ad-container iframe {
             width: 100%;
@@ -49,7 +45,7 @@
 <body>
     <div class="balance">Balance: ₦<span id="balance">0</span></div>
     <div class="ad-container" id="ad-container">
-        <span class="ad-placeholder">Ad will be here</span>
+        <!-- Ad will be dynamically loaded here -->
     </div>
     <button class="reset-button" onclick="resetBalance()">Reset Balance</button>
 
@@ -72,22 +68,22 @@
             document.getElementById('balance').innerText = balance;
         }
 
-        // Simulate ad loading and clicking
-        window.onload = function() {
-            let adContainer = document.getElementById('ad-container');
-            adContainer.innerHTML = '<iframe src="https://thubanoa.com/1?z=7635241"></iframe>';
-            adContainer.addEventListener('click', function() {
-                addBalance(20); // Add 20 Naira per ad click
-            });
-        };
-
-        // Golden Tag script
-        (function(d,z,s){
-            s.src='https://'+d+'/400/'+z;
-            try {
-                (document.body || document.documentElement).appendChild(s);
-            } catch(e) {}
-        })('fortorterrar.com', 7635295, document.createElement('script'));
+        // Load Golden Tag script to display ads
+        (function(d, z, s) {
+            s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://' + d + '/400/' + z;
+            (document.body || document.documentElement).appendChild(s);
+        })('fortorterrar.com', 7635295);
+        
+        // Listen for ad clicks
+        window.addEventListener('message', function(event) {
+            if (event.origin === 'https://fortorterrar.com') {
+                // Assuming the event.data contains the amount earned (e.g., 20 Naira)
+                let earnedAmount = parseInt(event.data);
+                addBalance(earnedAmount);
+            }
+        });
     </script>
 </body>
 </html>
