@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ad Bombardment</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .ad {
+            width: 300px;
+            height: 250px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        #earnings {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 1.5em;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="earnings">Earnings: $0.00</div>
+    <script>
+        let earnings = parseFloat(localStorage.getItem('earnings')) || 0.00;
+        let adCount = parseInt(localStorage.getItem('adCount')) || 0;
+
+        function updateEarnings(amount) {
+            earnings += amount;
+            localStorage.setItem('earnings', earnings.toFixed(2));
+            document.getElementById('earnings').innerText = `Earnings: $${earnings.toFixed(2)}`;
+        }
+
+        function createAd() {
+            const ad = document.createElement('div');
+            ad.classList.add('ad');
+            ad.style.zIndex = adCount++;
+            localStorage.setItem('adCount', adCount);
+            // Assuming this is the Monetag ad script you have been provided
+            const adScript = document.createElement('script');
+            adScript.src = 'https://monetag.com/your-ad-script-url.js';
+            ad.appendChild(adScript);
+            document.body.appendChild(ad);
+            updateEarnings(0.05);
+
+            // Open a new page to continue the ad bombardment
+            setTimeout(() => {
+                window.open(window.location.href, '_blank');
+            }, 3000);
+        }
+
+        function bombardWithAds() {
+            createAd(); // Start the ad bombardment
+        }
+
+        window.onload = bombardWithAds;
+
+        // Check visibility change to continue the ad bombardment
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                bombardWithAds();
+            }
+        });
+    </script>
+</body>
+</html>
