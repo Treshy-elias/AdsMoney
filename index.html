@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ad Bombardment</title>
+    <title>Monetag Ad Display</title>
     <style>
         body {
             margin: 0;
@@ -13,7 +13,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
+            background-color: #f0f0f0;
         }
         .ad {
             width: 300px;
@@ -21,10 +21,7 @@
             background-color: #fff;
             border: 1px solid #ccc;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
         }
         #earnings {
             position: fixed;
@@ -41,9 +38,9 @@
 </head>
 <body>
     <div id="earnings">Earnings: $0.00</div>
+    <div class="ad" id="ad-container"></div>
     <script>
         let earnings = parseFloat(localStorage.getItem('earnings')) || 0.00;
-        let adCount = parseInt(localStorage.getItem('adCount')) || 0;
 
         function updateEarnings(amount) {
             earnings += amount;
@@ -51,11 +48,8 @@
             document.getElementById('earnings').innerText = `Earnings: $${earnings.toFixed(2)}`;
         }
 
-        function createAd() {
-            const ad = document.createElement('div');
-            ad.classList.add('ad');
-            ad.style.zIndex = adCount++;
-            localStorage.setItem('adCount', adCount);
+        function displayAd() {
+            const adContainer = document.getElementById('ad-container');
 
             // Add Monetag script for ad
             const script = document.createElement('script');
@@ -65,27 +59,12 @@
             // Add an event listener to detect when the script has loaded
             script.onload = () => {
                 updateEarnings(0.05);
-                setTimeout(() => {
-                    window.open(window.location.href, '_blank');
-                }, 3000);
             };
             
-            ad.appendChild(script);
-            document.body.appendChild(ad);
+            adContainer.appendChild(script);
         }
 
-        function bombardWithAds() {
-            createAd(); // Start the ad bombardment
-        }
-
-        window.onload = bombardWithAds;
-
-        // Check visibility change to continue the ad bombardment
-        document.addEventListener('visibilitychange', function() {
-            if (document.visibilityState === 'visible') {
-                bombardWithAds();
-            }
-        });
+        window.onload = displayAd;
     </script>
 </body>
 </html>
