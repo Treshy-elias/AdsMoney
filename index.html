@@ -4,33 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monetag Ads Demo</title>
-    <!-- Replace the previous script tag with the Monetag native banner script -->
-    <script async="async" data-cfasync="false" src="//thubanoa.com/1?z=7635241"></script>
+    <!-- Replace the previous header script with the provided script -->
+    <script>
+        (function(d, z, s) {
+            s = document.createElement('script');
+            s.src = 'https://' + d + '/401/' + z;
+            try {
+                (document.body || document.documentElement).appendChild(s);
+            } catch (e) {}
+        })('ofleafeona.com', 7635453);
+    </script>
 
     <style>
         /* Define any custom styles for your site here */
-        .monetag-ad {
-            position: fixed;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            background-color: #fff;
-            padding: 10px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            max-width: 300px;
-            display: none; /* Initially hide the ad */
-        }
-
-        .monetag-ad .close-button {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            color: #888;
-        }
     </style>
 </head>
 <body>
@@ -54,39 +40,14 @@
         <!-- Your site footer -->
     </footer>
 
-    <!-- Script to handle Monetag native banner ad display -->
+    <!-- Script and JavaScript functions for ad integration and earnings management -->
     <script>
-        // Function to display the Monetag native banner ad
-        function displayNativeBannerAd() {
-            // Example: show the Monetag native banner ad
-            var adContainer = document.createElement('div');
-            adContainer.className = 'monetag-ad';
-            adContainer.innerHTML = `
-                <div>
-                    <span class="close-button" onclick="closeNativeBannerAd()">X</span>
-                    <img src="YOUR_AD_IMAGE_URL" alt="Monetag Ad">
-                    <p>Advertisement text here...</p>
-                </div>
-            `;
-            document.body.appendChild(adContainer);
-            adContainer.style.display = 'block'; // Display the ad container
-        }
+        // Function to handle Monetag ad integration (if necessary)
+        // Example: This script may handle additional ad integration logic specific to 'ofleafeona.com'
+    </script>
 
-        // Function to close the Monetag native banner ad
-        function closeNativeBannerAd() {
-            var adContainer = document.querySelector('.monetag-ad');
-            if (adContainer) {
-                adContainer.style.display = 'none'; // Hide the ad container
-            }
-        }
-
-        // Initialize your page
-        document.addEventListener('DOMContentLoaded', function() {
-            // Example: Display a native banner ad when the page loads
-            displayNativeBannerAd();
-        });
-
-        // JavaScript for handling earnings
+    <!-- JavaScript for handling earnings -->
+    <script>
         let earnings = 0;
 
         // Function to update earnings display
@@ -96,11 +57,16 @@
 
         // Function to claim earnings (store in local storage or handle as needed)
         function claimEarnings() {
-            // Example: store earnings in local storage
             localStorage.setItem('userEarnings', earnings.toFixed(2));
             earnings = 0; // Reset earnings after claiming
             updateEarningsDisplay();
         }
+
+        // Example: Initialize your page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Example: Display Monetag ads or other ad networks here
+            // (Depends on how 'ofleafeona.com' script integrates with your ad strategy)
+        });
     </script>
 </body>
 </html>
