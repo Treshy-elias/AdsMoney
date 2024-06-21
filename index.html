@@ -58,7 +58,7 @@
             <h2>Your Earnings</h2>
             <p id="earningsAmount">0</p>
             <button onclick="claimEarnings()">Claim Earnings</button>
-            <button onclick="triggerVignetteBanner()">Click to Earn</button> <!-- Vignette Banner button -->
+            <button onclick="triggerDirectLink()">Click to Earn</button> <!-- Direct Link button -->
         </section>
     </main>
 
@@ -130,15 +130,10 @@
             updateEarningsDisplay();
         }
 
-        // Function to handle vignette banner clicks
-        function triggerVignetteBanner() {
-            // Example: Trigger the vignette banner ad
-            (function(d,z,s){
-                s.src='https://'+d+'/401/'+z;
-                try{
-                    (document.body || document.documentElement).appendChild(s)
-                } catch(e){}
-            })('gloaphoo.net', 7635453, document.createElement('script'));
+        // Function to handle direct link clicks
+        function triggerDirectLink() {
+            // Open the direct link in a new tab
+            window.open('https://psaudous.com/4/7638410', '_blank');
 
             // Add 4 naira to earnings
             earnings += 4;
