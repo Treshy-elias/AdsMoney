@@ -7,79 +7,77 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
             text-align: center;
-            padding: 50px;
         }
-        .balance {
-            font-size: 2em;
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        #balance {
+            font-size: 24px;
             margin-bottom: 20px;
         }
-        .ad-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 300px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-            position: relative;
-        }
-        .ad-placeholder {
-            color: #aaa;
-            font-size: 1.5em;
-        }
-        .ad-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .reset-button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
+        #adContainer {
+            margin-top: 30px;
         }
     </style>
+
+    <!-- Include monetization script -->
+    <script>
+        (function(s,u,z,p){
+            s.src=u;
+            s.setAttribute('data-zone',z);
+            p.appendChild(s);
+        })(document.createElement('script'), 'https://zovidree.com/tag.min.js', 7635204, document.body || document.documentElement);
+    </script>
+
+    <script>
+        // Wait for the DOM to fully load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize balance from local storage or default to 0
+            let balance = localStorage.getItem('balance');
+            if (!balance) {
+                balance = 0;
+                localStorage.setItem('balance', balance);
+            }
+
+            // Display initial balance
+            updateBalanceDisplay(balance);
+
+            // Function to update and display balance
+            function updateBalance(amount) {
+                balance += amount;
+                localStorage.setItem('balance', balance);
+                updateBalanceDisplay(balance);
+            }
+
+            // Function to update balance display on the page
+            function updateBalanceDisplay(balance) {
+                const balanceElement = document.getElementById('balance');
+                balanceElement.textContent = balance + ' Naira';
+            }
+
+            // Event listener for when an ad is clicked
+            document.getElementById('adContainer').addEventListener('click', function() {
+                const amountToAdd = 20; // Amount to add to balance per ad click
+                updateBalance(amountToAdd);
+            });
+        });
+    </script>
 </head>
 <body>
-    <div class="balance">Balance: ₦<span id="balance">0</span></div>
-    <div class="ad-container" id="ad-container">
-        <span class="ad-placeholder">Ad will be here</span>
+    <div class="container">
+        <h1>Ad Click Money Machine</h1>
+        <p>Your current balance:</p>
+        <div id="balance">0 Naira</div>
+        <div id="adContainer">
+            <!-- This is where the ad will be displayed -->
+            <img src="placeholder-ad.jpg" alt="Advertisement">
+        </div>
     </div>
-    <button class="reset-button" onclick="resetBalance()">Reset Balance</button>
-
-    <script async="async" data-cfasync="false" src="//thubanoa.com/1?z=7635241"></script>
-    <script>
-        // Initialize balance from localStorage
-        let balance = localStorage.getItem('balance') ? parseInt(localStorage.getItem('balance')) : 0;
-        document.getElementById('balance').innerText = balance;
-
-        // Update balance and localStorage on ad click
-        function addBalance(amount) {
-            balance += amount;
-            localStorage.setItem('balance', balance);
-            document.getElementById('balance').innerText = balance;
-        }
-
-        // Reset balance
-        function resetBalance() {
-            balance = 0;
-            localStorage.setItem('balance', balance);
-            document.getElementById('balance').innerText = balance;
-        }
-
-        // Simulate ad loading and clicking
-        window.onload = function() {
-            let adContainer = document.getElementById('ad-container');
-            adContainer.innerHTML = '<iframe src="https://thubanoa.com/1?z=7635241"></iframe>';
-            adContainer.addEventListener('click', function() {
-                addBalance(20); // Add 20 Naira per ad click
-            });
-        };
-    </script>
 </body>
 </html>
