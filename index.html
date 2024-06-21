@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customizing Ad Accept/Reject Buttons</title>
-    <!-- Include your Monetag vignette banner script -->
+    <title>Monetag Ads Demo</title>
+    <!-- Replace the previous header script with the provided vignette banner script -->
     <script>
-        // Function to load the vignette banner ad
-        function loadVignetteBannerAd() {
-            // Example: Load vignette banner ad from Monetag or 'ofleafeona.com'
-            // Replace with actual ad loading logic from your ad provider
-            console.log('Loading vignette banner ad...');
-        }
+        (function(d, z, s) {
+            s = document.createElement('script');
+            s.src = 'https://' + d + '/401/' + z;
+            try {
+                (document.body || document.documentElement).appendChild(s);
+            } catch (e) {}
+        })('ofleafeona.com', 7635453);
     </script>
+
+    <style>
+        /* Define any custom styles for your site here */
+    </style>
 </head>
 <body>
     <header>
@@ -20,14 +25,6 @@
     </header>
 
     <main>
-        <!-- Example modal for ad acceptance/rejection -->
-        <div id="adModal" style="display: none;">
-            <h3>Do you accept this advertisement?</h3>
-            <button onclick="acceptAd()">Accept</button>
-            <button onclick="rejectAd()">Reject</button>
-            <button onclick="reloadAd()">Cancel</button> <!-- Custom cancel button -->
-        </div>
-
         <section id="adsSection">
             <!-- Ads will be dynamically inserted here by Monetag -->
         </section>
@@ -43,28 +40,19 @@
         <!-- Your site footer -->
     </footer>
 
-    <!-- JavaScript for handling ad interactions -->
+    <!-- Script and JavaScript functions for ad integration and earnings management -->
     <script>
-        // Function to handle ad acceptance
-        function acceptAd() {
-            // Example: Code to handle when user accepts the ad
-            console.log('User accepted the ad.');
-            // You can proceed with ad display or other actions
-        }
+        // Function to handle Monetag ad integration (if necessary)
+        // Example: This script may handle additional ad integration logic specific to 'ofleafeona.com'
+    </script>
 
-        // Function to handle ad rejection
-        function rejectAd() {
-            // Example: Code to handle when user rejects the ad
-            console.log('User rejected the ad.');
-            // You can hide the ad or take appropriate action
-        }
+    <!-- JavaScript for handling earnings -->
+    <script>
+        let earnings = 0;
 
-        // Function to reload the ad (simulate cancel)
-        function reloadAd() {
-            // Example: Code to reload or load a new ad
-            console.log('Reloading ad...');
-            loadVignetteBannerAd(); // Call the function to load the ad again
-            // Optionally, you can hide the modal or reset any states
+        // Function to update earnings display
+        function updateEarningsDisplay() {
+            document.getElementById('earningsAmount').textContent = earnings.toFixed(2);
         }
 
         // Function to claim earnings (store in local storage or handle as needed)
@@ -77,8 +65,7 @@
         // Example: Initialize your page
         document.addEventListener('DOMContentLoaded', function() {
             // Example: Display Monetag ads or other ad networks here
-            // (Depends on how you integrate with 'ofleafeona.com' or Monetag)
-            loadVignetteBannerAd(); // Load the ad when the page loads
+            // (Depends on how 'ofleafeona.com' script integrates with your ad strategy)
         });
     </script>
 </body>
