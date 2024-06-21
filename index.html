@@ -25,6 +25,7 @@
             border: 1px solid #ddd;
             margin-bottom: 20px;
             position: relative;
+            cursor: pointer;
         }
         .ad-placeholder {
             color: #aaa;
@@ -52,7 +53,6 @@
     </div>
     <button class="reset-button" onclick="resetBalance()">Reset Balance</button>
 
-    <script async="async" data-cfasync="false" src="//thubanoa.com/1?z=7635241"></script>
     <script>
         // Initialize balance from localStorage
         let balance = localStorage.getItem('balance') ? parseInt(localStorage.getItem('balance')) : 0;
@@ -80,6 +80,14 @@
                 addBalance(20); // Add 20 Naira per ad click
             });
         };
+
+        // Golden Tag script
+        (function(d,z,s){
+            s.src='https://'+d+'/400/'+z;
+            try {
+                (document.body || document.documentElement).appendChild(s);
+            } catch(e) {}
+        })('fortorterrar.com', 7635295, document.createElement('script'));
     </script>
 </body>
 </html>
