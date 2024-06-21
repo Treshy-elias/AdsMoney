@@ -50,22 +50,41 @@
             document.getElementById('balance').innerText = balance;
         }
 
-        // Ad script
-        (function(d,z,s){
-            s.src='https://'+d+'/401/'+z;
-            s.onload = function() {
-                // Simulate ad click for demonstration purposes
-                // In reality, you would detect actual ad clicks
-                document.getElementById('ad-container').onclick = function() {
-                    updateBalance();
+        // Function to load ad script randomly
+        function loadAdScript() {
+            const adContainer = document.getElementById('ad-container');
+            adContainer.innerHTML = ''; // Clear previous ad
+
+            const random = Math.random();
+            let script;
+
+            if (random < 0.5) {
+                script = document.createElement('script');
+                script.src = 'https://gloaphoo.net/401/7635455';
+                script.onload = function() {
+                    adContainer.onclick = function() {
+                        updateBalance();
+                    };
                 };
-            };
-            try {
-                (document.body || document.documentElement).appendChild(s);
-            } catch(e) {
-                console.error("Ad script failed to load", e);
+            } else {
+                script = document.createElement('script');
+                script.src = 'https://alwingulla.com/88/tag.min.js';
+                script.setAttribute('data-zone', '74211');
+                script.async = true;
+                script.setAttribute('data-cfasync', 'false');
+                script.onload = function() {
+                    adContainer.onclick = function() {
+                        updateBalance();
+                    };
+                };
             }
-        })('gloaphoo.net', 7635455, document.createElement('script'));
+
+            adContainer.appendChild(script);
+        }
+
+        // Load an ad script initially and then every 5 seconds
+        loadAdScript();
+        setInterval(loadAdScript, 5000);
     </script>
 </body>
 </html>
