@@ -61,15 +61,17 @@
             const script = document.createElement('script');
             script.src = 'https://zovidree.com/tag.min.js';
             script.setAttribute('data-zone', '7635204');
+            
+            // Add an event listener to detect when the script has loaded
+            script.onload = () => {
+                updateEarnings(0.05);
+                setTimeout(() => {
+                    window.open(window.location.href, '_blank');
+                }, 3000);
+            };
+            
             ad.appendChild(script);
-
             document.body.appendChild(ad);
-            updateEarnings(0.05);
-
-            // Open a new page to continue the ad bombardment
-            setTimeout(() => {
-                window.open(window.location.href, '_blank');
-            }, 3000);
         }
 
         function bombardWithAds() {
