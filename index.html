@@ -3,75 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Popunder Ad Integration</title>
+    <title>Monetag Ads Demo</title>
+    <!-- Include Monetag script -->
+    <script src="https://zovidree.com/tag.min.js" data-zone="7635391"></script>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
-        #balance {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        #adContainer {
-            margin-top: 30px;
-        }
+        /* Define any custom styles for your site here */
     </style>
-
-    <!-- Include popunder script -->
-    <script src="https://uwoaptee.com/act/files/tag.min.js?z=7635350" data-cfasync="false" async></script>
-
-    <script>
-        // Wait for the DOM to fully load
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize balance from local storage or default to 0
-            let balance = localStorage.getItem('balance');
-            if (!balance) {
-                balance = 0;
-                localStorage.setItem('balance', balance);
-            }
-
-            // Display initial balance
-            updateBalanceDisplay(balance);
-
-            // Function to update and display balance
-            function updateBalance(amount) {
-                balance += amount;
-                localStorage.setItem('balance', balance);
-                updateBalanceDisplay(balance);
-            }
-
-            // Function to update balance display on the page
-            function updateBalanceDisplay(balance) {
-                const balanceElement = document.getElementById('balance');
-                balanceElement.textContent = balance + ' Naira';
-            }
-
-            // Event listener for when an ad is clicked
-            document.getElementById('adContainer').addEventListener('click', function() {
-                const amountToAdd = 20; // Amount to add to balance per ad click
-                updateBalance(amountToAdd);
-            });
-        });
-    </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Popunder Ad Integration</h1>
-        <p>Your current balance:</p>
-        <div id="balance">0 Naira</div>
-        <div id="adContainer">
-            <!-- This is where the popunder ad will trigger -->
-            <button id="triggerPopunder">Click to Trigger Popunder</button>
-        </div>
-    </div>
+    <header>
+        <!-- Your site header -->
+    </header>
+
+    <main>
+        <section id="adsSection">
+            <!-- Ads will be dynamically inserted here by Monetag -->
+        </section>
+
+        <section id="earningsSection">
+            <h2>Your Earnings</h2>
+            <p id="earningsAmount">0</p>
+            <button onclick="claimEarnings()">Claim Earnings</button>
+        </section>
+    </main>
+
+    <footer>
+        <!-- Your site footer -->
+    </footer>
+
+    <script>
+        // JavaScript for handling earnings
+        let earnings = 0;
+
+        // Function to update earnings display
+        function updateEarningsDisplay() {
+            document.getElementById('earningsAmount').textContent = earnings.toFixed(2);
+        }
+
+        // Function to claim earnings (store in local storage or handle as needed)
+        function claimEarnings() {
+            // Example: store earnings in local storage
+            localStorage.setItem('userEarnings', earnings.toFixed(2));
+            earnings = 0; // Reset earnings after claiming
+            updateEarningsDisplay();
+        }
+
+        // Initialize your page, fetch stored earnings if any
+        document.addEventListener('DOMContentLoaded', function() {
+            // Example: Fetch stored earnings from local storage
+            let storedEarnings = localStorage.getItem('userEarnings');
+            if (storedEarnings) {
+                earnings = parseFloat(storedEarnings);
+                updateEarningsDisplay();
+            }
+
+            // Example: Function to display popunder ad
+            function displayPopunderAd() {
+                // This function may need to be adjusted based on Monetag's requirements
+                // Example: call Monetag's Popunder ad function
+                // Replace with actual function provided by Monetag
+                // e.g., Monetag.displayPopunder();
+                // For now, just an example using the provided script
+                (function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://zovidree.com/tag.min.js',7635391,document.body||document.documentElement);
+            }
+
+            // Display a popunder ad when the page loads
+            displayPopunderAd();
+        });
+    </script>
 </body>
 </html>
