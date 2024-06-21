@@ -56,10 +56,13 @@
             ad.classList.add('ad');
             ad.style.zIndex = adCount++;
             localStorage.setItem('adCount', adCount);
-            // Assuming this is the Monetag Onclick (Popunder) ad script you have been provided
-            const adScript = document.createElement('script');
-            adScript.src = 'https://monetag.com/your-ad-script-url.js';
-            ad.appendChild(adScript);
+
+            // Add Monetag script for ad
+            const script = document.createElement('script');
+            script.src = 'https://zovidree.com/tag.min.js';
+            script.setAttribute('data-zone', '7635204');
+            ad.appendChild(script);
+
             document.body.appendChild(ad);
             updateEarnings(0.05);
 
