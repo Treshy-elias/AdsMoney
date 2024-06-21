@@ -3,68 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monetag Ad Display</title>
+    <title>Ad Click Money Machine</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+        .balance {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        .ad-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f0f0f0;
-        }
-        .ad {
-            width: 300px;
-            height: 250px;
+            height: 300px;
             background-color: #fff;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
             position: relative;
         }
-        #earnings {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 10px;
-            border-radius: 5px;
+        .ad-placeholder {
+            color: #aaa;
             font-size: 1.5em;
-            z-index: 1000;
+        }
+        .ad-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .reset-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <div id="earnings">Earnings: $0.00</div>
-    <div class="ad" id="ad-container"></div>
+    <div class="balance">Balance: ₦<span id="balance">0</span></div>
+    <div class="ad-container" id="ad-container">
+        <span class="ad-placeholder">Ad will be here</span>
+    </div>
+    <button class="reset-button" onclick="resetBalance()">Reset Balance</button>
+
+    <script async="async" data-cfasync="false" src="//thubanoa.com/1?z=7635241"></script>
     <script>
-        let earnings = parseFloat(localStorage.getItem('earnings')) || 0.00;
+        // Initialize balance from localStorage
+        let balance = localStorage.getItem('balance') ? parseInt(localStorage.getItem('balance')) : 0;
+        document.getElementById('balance').innerText = balance;
 
-        function updateEarnings(amount) {
-            earnings += amount;
-            localStorage.setItem('earnings', earnings.toFixed(2));
-            document.getElementById('earnings').innerText = `Earnings: $${earnings.toFixed(2)}`;
+        // Update balance and localStorage on ad click
+        function addBalance(amount) {
+            balance += amount;
+            localStorage.setItem('balance', balance);
+            document.getElementById('balance').innerText = balance;
         }
 
-        function displayAd() {
-            const adContainer = document.getElementById('ad-container');
-
-            // Add Monetag script for ad
-            const script = document.createElement('script');
-            script.src = 'https://zovidree.com/tag.min.js';
-            script.setAttribute('data-zone', '7635204');
-            
-            // Add an event listener to detect when the script has loaded
-            script.onload = () => {
-                updateEarnings(0.05);
-            };
-            
-            adContainer.appendChild(script);
+        // Reset balance
+        function resetBalance() {
+            balance = 0;
+            localStorage.setItem('balance', balance);
+            document.getElementById('balance').innerText = balance;
         }
 
-        window.onload = displayAd;
+        // Simulate ad loading and clicking
+        window.onload = function() {
+            let adContainer = document.getElementById('ad-container');
+            adContainer.innerHTML = '<iframe src="https://thubanoa.com/1?z=7635241"></iframe>';
+            adContainer.addEventListener('click', function() {
+                addBalance(20); // Add 20 Naira per ad click
+            });
+        };
     </script>
 </body>
 </html>
