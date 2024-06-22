@@ -275,12 +275,14 @@
             const urlParams = new URLSearchParams(window.location.search);
             const referrerId = urlParams.get('ref');
             if (referrerId) {
+                console.log(`Referral detected from ID: ${referrerId}`);
                 let currentReferrals = parseInt(localStorage.getItem(`referrals_${referrerId}`)) || 0;
+                console.log(`Current referrals for ${referrerId}: ${currentReferrals}`);
                 localStorage.setItem(`referrals_${referrerId}`, currentReferrals + 1);
-                // Optionally reward the referrer
                 if (currentReferrals + 1 >= 5) { // For example, reward after 5 referrals
                     let reward = 0.50; // Reward amount
                     if (referrerId !== localStorage.getItem('referralId')) {
+                        console.log(`Rewarding referrer ${referrerId} with ${reward}`);
                         updateEarnings(reward);
                     }
                 }
@@ -304,6 +306,7 @@
             const referralId = localStorage.getItem('referralId');
             if (referralId) {
                 let currentReferrals = parseInt(localStorage.getItem(`referrals_${referralId}`)) || 0;
+                console.log(`Referrals for ${referralId}: ${currentReferrals}`);
                 updateReferrals(currentReferrals);
             }
         };
