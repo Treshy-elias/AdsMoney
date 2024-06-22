@@ -252,8 +252,11 @@
 
         // Generate a referral ID and create a shareable link
         function createReferralLink() {
-            const referralId = Math.random().toString(36).substring(2, 15);
-            localStorage.setItem('referralId', referralId);
+            let referralId = localStorage.getItem('referralId');
+            if (!referralId) {
+                referralId = Math.random().toString(36).substring(2, 15);
+                localStorage.setItem('referralId', referralId);
+            }
             const url = new URL(window.location.href);
             url.searchParams.set('ref', referralId);
             return url.toString();
@@ -292,7 +295,6 @@
         // Initialize the game
         window.onload = () => {
             updateEarnings(0); // Display initial earnings
-            updateReferrals(referrals); // Display initial referrals
             startGame();
             handleReferrals();
 
