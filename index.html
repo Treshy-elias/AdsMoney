@@ -16,7 +16,7 @@
             position: relative;
             font-family: Arial, sans-serif;
         }
-        #earnings, #timer, #referrals {
+        #earnings, #timer {
             position: fixed;
             top: 10px;
             background: rgba(0, 0, 0, 0.7);
@@ -33,12 +33,9 @@
         #timer {
             left: 10px;
         }
-        #referrals {
-            right: 10px;
-        }
         #share {
             position: fixed;
-            top: 50px;
+            top: 10px;
             right: 10px;
             background: lime;
             color: black;
@@ -105,7 +102,6 @@
 <body>
     <div id="timer">00:00</div>
     <div id="earnings">$0.00</div>
-    <div id="referrals">Referrals: 0</div>
     <div id="share">Share</div>
     <div class="grid"></div>
     <div id="game-over-overlay">
@@ -116,7 +112,6 @@
 
     <script>
         let earnings = parseFloat(localStorage.getItem('earnings')) || 0.00;
-        let referrals = parseInt(localStorage.getItem('referrals')) || 0;
         let time = 0;
         let gameInterval, dollarInterval, bombInterval, adInterval;
         const gameDuration = 60; // Game duration in seconds
@@ -126,12 +121,6 @@
             if (earnings < 0) earnings = 0; // Prevent negative earnings
             localStorage.setItem('earnings', earnings.toFixed(2));
             document.getElementById('earnings').innerText = `$${earnings.toFixed(2)}`;
-        }
-
-        function updateReferrals(count) {
-            referrals = count;
-            localStorage.setItem('referrals', referrals);
-            document.getElementById('referrals').innerText = `Referrals: ${referrals}`;
         }
 
         function startTimer() {
@@ -162,7 +151,7 @@
             });
 
             // Animate the dollar to fall from the top to the bottom
-            let fallingSpeed = Math.random() * 2 + 2;
+            let fallingSpeed = Math.random() * 2.5 + 2.5; // Increased falling speed
             function fall() {
                 let top = parseFloat(dollar.style.top);
                 if (top < window.innerHeight) {
@@ -192,7 +181,7 @@
             });
 
             // Animate the bomb to fall from the top to the bottom
-            let fallingSpeed = Math.random() * 2 + 2;
+            let fallingSpeed = Math.random() * 2.5 + 2.5; // Increased falling speed
             function fall() {
                 let top = parseFloat(bomb.style.top);
                 if (top < window.innerHeight) {
@@ -210,8 +199,8 @@
             time = 0;
 
             // Start intervals
-            dollarInterval = setInterval(createDollar, 1200); // Adjusted spawn rate
-            bombInterval = setInterval(createBomb, 2500); // Adjusted spawn rate
+            dollarInterval = setInterval(createDollar, 800); // Increased spawn rate
+            bombInterval = setInterval(createBomb, 1500); // Increased spawn rate
             adInterval = setInterval(function() {
                 (function(d,z,s){
                     s.src='https://'+d+'/401/'+z;
@@ -250,45 +239,20 @@
             window.close();
         }
 
-        // Generate a referral ID and create a shareable link
-        function createReferralLink() {
-            let referralId = localStorage.getItem('referralId');
-            if (!referralId) {
-                referralId = Math.random().toString(36).substring(2, 15);
-                localStorage.setItem('referralId', referralId);
-            }
-            const url = new URL(window.location.href);
-            url.searchParams.set('ref', referralId);
-            return url.toString();
-        }
-
-        // Copy referral link to clipboard
-        function copyToClipboard(text) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            document.body.appendChild(textArea);
-            textArea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textArea);
-            alert('Referral link copied to clipboard!');
-        }
-
-        // Handle referrals
-        function handleReferrals() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const referrerId = urlParams.get('ref');
-            if (referrerId) {
-                console.log(`Referral detected from ID: ${referrerId}`);
-                let currentReferrals = parseInt(localStorage.getItem(`referrals_${referrerId}`)) || 0;
-                console.log(`Current referrals for ${referrerId}: ${currentReferrals}`);
-                localStorage.setItem(`referrals_${referrerId}`, currentReferrals + 1);
-                if (currentReferrals + 1 >= 5) { // For example, reward after 5 referrals
-                    let reward = 0.50; // Reward amount
-                    if (referrerId !== localStorage.getItem('referralId')) {
-                        console.log(`Rewarding referrer ${referrerId} with ${reward}`);
-                        updateEarnings(reward);
-                    }
-                }
+        // Share game link
+        function shareGame() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Dollar Rain Game',
+                    text: 'Try this fun game! Click the link to play:',
+                    url: window.location.href
+                }).then(() => {
+                    console.log('Thanks for sharing!');
+                }).catch(err => {
+                    console.error('Error sharing:', err);
+                });
+            } else {
+                alert('Share feature is not supported in this browser.');
             }
         }
 
@@ -296,21 +260,9 @@
         window.onload = () => {
             updateEarnings(0); // Display initial earnings
             startGame();
-            handleReferrals();
 
             // Add event listener to the share button
-            document.getElementById('share').addEventListener('click', () => {
-                const referralLink = createReferralLink();
-                copyToClipboard(referralLink);
-            });
-
-            // Display the referral count if the user has a referral ID
-            const referralId = localStorage.getItem('referralId');
-            if (referralId) {
-                let currentReferrals = parseInt(localStorage.getItem(`referrals_${referralId}`)) || 0;
-                console.log(`Referrals for ${referralId}: ${currentReferrals}`);
-                updateReferrals(currentReferrals);
-            }
+            document.getElementById('share').addEventListener('click', shareGame);
         };
     </script>
 </body>
